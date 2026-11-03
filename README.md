@@ -41,80 +41,84 @@ Measured on a MacBook Pro (M1 Max, 32 GB), each case played with TimberPerf and 
 
 ## What it speeds up
 
-Each one gives the same result as the game's own code, only sooner. The ID is how logs, issues and commits refer to it, and the tag says where it comes from: *T3MP* is ported from its code, *Performance Plus* is written from its description, *ours* is TimberPerf's own.
+Each one gives the same result as the game's own code, only sooner. The ID is how logs, issues and commits refer to it, and the badge says where it comes from:
+
+- <img src="Media/badges/T3MP.svg" alt="T3MP" height="18"> ported from T3MP's code
+- <img src="Media/badges/PP.svg" alt="Performance Plus" height="18"> written from Performance Plus's description
+- <img src="Media/badges/ours.svg" alt="TimberPerf" height="18"> TimberPerf's own
 
 ### Ticks
 
-- `tick-frontier`: entity buckets skip entities with no enabled tickable component instead of visiting each one. *T3MP*
-- `water-objects`: the water depth over every plant and building is read straight from the water map's arrays. *Performance Plus*
-- `site-finish-check`: a construction site checks its build time before its other finishing checks. *Performance Plus*
-- `effect-chances`: an effect's chance for a need is looked up once, not on every check. *ours*
-- `tube-checks`: whether a new or removed object is a tube is asked once, not once per beaver. *Performance Plus*
-- `remove-by-reference`: removed entities, components and water objects are found in the game's lists by reference. *Performance Plus*
-- `active-alerts`: the warnings panel is rebuilt from the active warnings only. *Performance Plus*
-- `event-delegates`: event handlers are called through typed delegates instead of reflection. *T3MP*
-- `behavior-log`: a beaver's behaviour log is turned into text only when a save or the debug panel reads it. *Performance Plus*
+- `tick-frontier`: entity buckets skip entities with no enabled tickable component instead of visiting each one. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `water-objects`: the water depth over every plant and building is read straight from the water map's arrays. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `site-finish-check`: a construction site checks its build time before its other finishing checks. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `effect-chances`: an effect's chance for a need is looked up once, not on every check. <img src="Media/badges/ours.svg" alt="TimberPerf" height="18">
+- `tube-checks`: whether a new or removed object is a tube is asked once, not once per beaver. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `remove-by-reference`: removed entities, components and water objects are found in the game's lists by reference. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `active-alerts`: the warnings panel is rebuilt from the active warnings only. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `event-delegates`: event handlers are called through typed delegates instead of reflection. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `behavior-log`: a beaver's behaviour log is turned into text only when a save or the debug panel reads it. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
 
 ### Paths and reachability
 
-- `path-memo`: a path asked again before the paths changed is answered from memory. *Performance Plus*
-- `accessible-memo`: a path to something reachable from every side is one answer, not one per side. *Performance Plus*
-- `reachability-areas`: which places reach which is kept in stamped arrays instead of a dictionary cleared per area. *Performance Plus*
-- `gate-nodes`: paths aren't checked tile by tile for gates while the map has none. *Performance Plus*
-- `terrain-visits`: a terrain node is checked and marked visited with one lookup instead of two. *T3MP*
-- `yielder-reachability`: a search for something to cut or gather skips path checks that can't change its pick. *T3MP*
+- `path-memo`: a path asked again before the paths changed is answered from memory. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `accessible-memo`: a path to something reachable from every side is one answer, not one per side. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `reachability-areas`: which places reach which is kept in stamped arrays instead of a dictionary cleared per area. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `gate-nodes`: paths aren't checked tile by tile for gates while the map has none. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `terrain-visits`: a terrain node is checked and marked visited with one lookup instead of two. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `yielder-reachability`: a search for something to cut or gather skips path checks that can't change its pick. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
 
 ### Jobs and goods
 
-- `goods-counts`: a district's stock and capacity are updated from the inventories that changed, not recounted every tick. *Performance Plus*
-- `processed-counts`: goods inside workshops are counted the same way. *Performance Plus*
-- `fill-cache`: an inventory's fill percentages are kept until its stock or what it may hold changes. *Performance Plus*
-- `allowed-good-rows`: an inventory's limits come from the row in hand instead of a search by name. *T3MP*
-- `full-inputs`: a carrier asked to fill an inventory with no room skips the search through the district. *Performance Plus*
-- `builder-district`: a builder looking for work finds its hub's district once per search. *Performance Plus*
-- `missing-materials`: a site needing goods nobody has shows its warning without searching the district for them. *Performance Plus*
-- `demolish-order`: a builder picking something to demolish checks distance before reachability. *Performance Plus*
-- `planting-spots`: farmers and foresters try their spots nearest first and stop at the first they can plant. *Performance Plus*
-- `full-farmhouses`: a farm house with no room for anything it grows doesn't search its crops. *Performance Plus*
-- `yielder-templates`: the kind of each crop or tree in range is looked up once. *Performance Plus*
+- `goods-counts`: a district's stock and capacity are updated from the inventories that changed, not recounted every tick. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `processed-counts`: goods inside workshops are counted the same way. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `fill-cache`: an inventory's fill percentages are kept until its stock or what it may hold changes. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `allowed-good-rows`: an inventory's limits come from the row in hand instead of a search by name. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `full-inputs`: a carrier asked to fill an inventory with no room skips the search through the district. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `builder-district`: a builder looking for work finds its hub's district once per search. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `missing-materials`: a site needing goods nobody has shows its warning without searching the district for them. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `demolish-order`: a builder picking something to demolish checks distance before reachability. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `planting-spots`: farmers and foresters try their spots nearest first and stop at the first they can plant. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `full-farmhouses`: a farm house with no room for anything it grows doesn't search its crops. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `yielder-templates`: the kind of each crop or tree in range is looked up once. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
 
 ### Movement and animation
 
-- `walker-speed`: a walker's speed delegate is made once per walker, not on every step. *T3MP*
-- `movement-substeps`: walkers move corner to corner without writing their transform every 0.1 tile. *T3MP*
-- `offscreen-animation`: models nobody can see keep their animation time and get posed when they come into view; models on screen are checked again every four frames, and a paused one already posed isn't posed again. *Performance Plus, ours*
-- `offscreen-swimming`: beavers out of sight skip the swimming update. *Performance Plus*
-- `animator-states`: an animated model picks its next animation from parameters read once, not by name per condition. *Performance Plus*
-- `enter-visibility`: a beaver entering a building is shown or hidden once, not twice. *Performance Plus*
+- `walker-speed`: a walker's speed delegate is made once per walker, not on every step. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `movement-substeps`: walkers move corner to corner without writing their transform every 0.1 tile. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `offscreen-animation`: models nobody can see keep their animation time and get posed when they come into view; models on screen are checked again every four frames, and a paused one already posed isn't posed again. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18"> <img src="Media/badges/ours.svg" alt="TimberPerf" height="18">
+- `offscreen-swimming`: beavers out of sight skip the swimming update. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `animator-states`: an animated model picks its next animation from parameters read once, not by name per condition. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `enter-visibility`: a beaver entering a building is shown or hidden once, not twice. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
 
 ### Drawing
 
-- `tree-patches`: plants are drawn as one mesh per material for every 32-tile patch, so a forest draws like an empty map. *ours*
-- `water-once-per-frame`: water textures go to the graphics card once a frame, not once a tick. *Performance Plus*
-- `water-upload`: water texture layers whose bytes didn't change aren't uploaded again. *T3MP*
-- `shaft-once-per-frame`: power shaft animations update once a frame, not once a tick. *Performance Plus*
-- `coloured-materials`: a recoloured material is looked up once per colouring. *Performance Plus*
-- `sound-listener`: where sounds are heard from is worked out again only when the camera moves. *Performance Plus*
+- `tree-patches`: plants are drawn as one mesh per material for every 32-tile patch, so a forest draws like an empty map. <img src="Media/badges/ours.svg" alt="TimberPerf" height="18">
+- `water-once-per-frame`: water textures go to the graphics card once a frame, not once a tick. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `water-upload`: water texture layers whose bytes didn't change aren't uploaded again. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `shaft-once-per-frame`: power shaft animations update once a frame, not once a tick. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `coloured-materials`: a recoloured material is looked up once per colouring. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
+- `sound-listener`: where sounds are heard from is worked out again only when the camera moves. <img src="Media/badges/PP.svg" alt="Performance Plus" height="18">
 
 ### Loading a save
 
-- `construction-plans`: singletons and components are built from plans made once per type instead of reflection every time. *T3MP*
-- `navigation-shapes`: a building's navmesh shape is built once per kind, orientation and footprint. *T3MP*
-- `initial-navigation`: the first navmesh is built from the queued changes in one go, reusing connection decisions for identical inputs. *T3MP*
-- `empty-flow-fields`: empty flow fields skip the changed nodes while navigation loads. *T3MP*
-- `load-event-routing`: load events go only to the handlers that can use them. *T3MP*
-- `block-routing`: block events during the load go only to the subscribers at the block's columns. *T3MP*
-- `transput-routing`: a new power connector is handed only to the connectors at the tile it faces. *T3MP*
-- `prepared-visuals`: entity models are set up while their entity is still inactive. *T3MP*
-- `prepared-status-icons`: status icons are cloned from one prepared copy. *T3MP*
-- `deferred-good-stacks`: an empty good pile's model is made only when it has something to show. *T3MP*
-- `atlas-pixels`: a texture's pixels are read once while building an atlas. *T3MP*
-- `terrain-surface`: each layer of the terrain's surface is worked out once. *T3MP*
-- `load-gc-budget`: garbage collection holds off during the load while there's memory to spare, with one full collection at its end. *T3MP*
+- `construction-plans`: singletons and components are built from plans made once per type instead of reflection every time. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `navigation-shapes`: a building's navmesh shape is built once per kind, orientation and footprint. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `initial-navigation`: the first navmesh is built from the queued changes in one go, reusing connection decisions for identical inputs. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `empty-flow-fields`: empty flow fields skip the changed nodes while navigation loads. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `load-event-routing`: load events go only to the handlers that can use them. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `block-routing`: block events during the load go only to the subscribers at the block's columns. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `transput-routing`: a new power connector is handed only to the connectors at the tile it faces. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `prepared-visuals`: entity models are set up while their entity is still inactive. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `prepared-status-icons`: status icons are cloned from one prepared copy. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `deferred-good-stacks`: an empty good pile's model is made only when it has something to show. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `atlas-pixels`: a texture's pixels are read once while building an atlas. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `terrain-surface`: each layer of the terrain's surface is worked out once. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
+- `load-gc-budget`: garbage collection holds off during the load while there's memory to spare, with one full collection at its end. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
 
 ### Extras
 
-- `editor-fps`: the game's FPS counter shows in the map editor too. *ours*
+- `editor-fps`: the game's FPS counter shows in the map editor too. <img src="Media/badges/ours.svg" alt="TimberPerf" height="18">
 
 Every load optimization checks the game's code it relies on against the versions it was reviewed with, and turns itself off after a game update that changed it, or when another mod patches the same methods.
 
