@@ -20,13 +20,13 @@ Measured on a MacBook Pro (M1 Max, 32 GB), each case played with TimberPerf and 
 | Load time | 45.8 s | 33.7 s | 26% faster |
 | Ticking at speed 3, per frame | 3.7 ms | 1.5 ms | 59% less |
 
-**A 512×512 forest in the map editor**: 65,468 plants, full-screen at 3456×2168, 30 s paused and 30 s at the editor's top speed. The editor only simulates water and soil, a few ticks a second, and the display caps it at 120 fps: what changes is the hitch each tick put in its frame.
+**A 512×512 map in the editor with 65,468 plants**, full-screen at 3456×2168, the camera zoomed out over most of the map. 30 s paused and 30 s at the editor's top speed:
 
 | | Without | With | |
 |---|---|---|---|
-| Paused | 120 fps | 116 fps | at the display's cap |
-| Top speed | 105 fps | 109 fps | +4% |
-| Frames over 33 ms at top speed | 50 | 0 | no hitches |
+| Paused | 11 fps | 107 fps | 10× |
+| Top speed | 11 fps | 84 fps | 8× |
+| 1% low, top speed | 10 fps | 34 fps | 3.4× |
 | Water over plants, per tick | 14.3 ms | 6.6 ms | 54% less |
 
 ## What it speeds up
