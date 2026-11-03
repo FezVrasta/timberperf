@@ -1,6 +1,6 @@
 {
-  "Name": "TimberPerf",
-  "Version": "1.1.0-1.0.0",
+  "Name": "Timber Perf",
+  "Version": "1.1.0-0.0.0",
   "Id": "timberperf",
   "MinimumGameVersion": "1.1.0.0",
   "Description": "Faster Timberborn. Big settlements tick faster, saves load sooner, and forests draw as fast as empty land.\n\nBeaverBuddies Co-Op/PvP Edition and Archipelago already include it: with any of them on, the newest copy runs and the others stay off.\n\nIt turns itself off next to T3MP or Performance Plus.",
