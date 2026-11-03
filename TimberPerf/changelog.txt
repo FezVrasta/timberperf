@@ -1,3 +1,7 @@
+v1.1.0-1.0.1
+1.1.0-1.0.1
+* The FPS counter shows in the map editor too.
+
 v1.1.0-1.0.0
 1.1.0-1.0.0
 * Faster big settlements, quicker loading, and forests that draw as fast as empty land.
