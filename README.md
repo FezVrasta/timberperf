@@ -10,13 +10,15 @@ It's a mod of its own, and other mods can ship it inside their folder too: Beave
 
 Measured on a MacBook Pro (M1 Max, 32 GB), windowed, each case played with TimberPerf and then with it off (`TimberPerf-off`), Timber Empires disabled.
 
-**A big late-game save** (castori-di-montagna-fabri, 1 minute at speed 3):
+**A big late-game save** (castori-di-montagna-fabri, a minute at each speed):
 
 | | Without | With | |
 |---|---|---|---|
-| Load time | 45.3 s | 35.4 s | 22% faster |
-| Frame time | 25.7 ms (39 fps) | 19.9 ms (50 fps) | 28% more fps |
-| Ticking, per frame | 4.1 ms | 1.9 ms | 54% less |
+| Paused | 59 fps | 92 fps | +56% |
+| Speed 1 | 42 fps | 57 fps | +36% |
+| Speed 3 | 41 fps | 55 fps | +34% |
+| Load time | 45.8 s | 33.7 s | 26% faster |
+| Ticking at speed 3, per frame | 3.7 ms | 1.5 ms | 59% less |
 
 **A 512×512 map in the editor** (65,468 plants, 20 s at the editor's top speed):
 
