@@ -6,7 +6,14 @@
 
 Faster Timberborn: big settlements tick faster, saves load sooner, and forests draw as fast as empty land.
 
-It's a mod of its own, and other mods can ship it inside their folder too: BeaverBuddies Co-Op/PvP Edition and Archipelago do. The game loads every DLL in every enabled mod's folder, so with more than one of them on there's more than one copy. Only the newest version runs (the first loaded, when they're the same); the others log that they stand down and do nothing. Bump `<Version>` in `TimberPerf/TimberPerf.csproj` and in `TimberPerf/manifest.json` with every change, or an older build could be the one that runs.
+## Next to T3MP and Performance Plus
+
+- **Both in one.** T3MP's optimizations, ported, and the fixes Performance Plus lists, written again from its description, in one mod.
+- **More of its own.** Plants merged into patches (a 512×512 forest goes from 11 to 107 fps), cheaper flooding checks, and the FPS counter in the map editor.
+- **Made for multiplayer.** Every optimization gives the game's own result, so a BeaverBuddies co-op or PvP game stays the same on every player's machine.
+- **Ready for game updates.** The save-load optimizations check the game's code they rely on, and switch off by themselves when an update changes it.
+
+BeaverBuddies Co-Op/PvP Edition and Archipelago ship it inside their own folders. With more than one copy installed, only the newest runs: the others log that they stand down and do nothing.
 
 ## Numbers
 
@@ -112,7 +119,7 @@ Every load optimization checks the game's code it relies on against the versions
 
 ## Building
 
-`dotnet build -c Release` in `TimberPerf/` installs it into the Mods folder as the mod. `Tools/Package/package.sh` builds it and zips the installed folder to ~/Downloads. `Tools/make_cover.py` draws `Media/cover.png` and the thumbnail, with the brush strokes of Timber Empires' icons (a checkout of it next to this repo).
+`dotnet build -c Release` in `TimberPerf/` installs it into the Mods folder as the mod. `Tools/Package/package.sh` builds it and zips the installed folder to ~/Downloads. `Tools/Package/release.sh patch|minor|major` cuts a release and `Tools/Package/upload.sh` puts it on the Workshop and mod.io. Release every change with a new version: the version decides which copy runs. `Tools/make_cover.py` draws `Media/cover.png` and the thumbnail, with the brush strokes of Timber Empires' icons (a checkout of it next to this repo).
 
 ## Using it from a mod
 
@@ -128,4 +135,4 @@ GPL-3.0 (`License.txt`), like BeaverBuddies.
 
 A file in Documents/Timberborn named `TimberPerf-off` (or the older `BeaverBuddies-noperf`) turns the optimizations off. T3MP or Performance Plus being installed does the same. `BeaverBuddies-perfverify` checks the remembered answers against the game's own and logs any that differ.
 
-Most of the optimizations are ported from T3MP (More More More Performance!) by toropippi, under the Apache License 2.0 (`LICENSE-T3MP.txt`).
+Most of the optimizations are ported from T3MP (More More More Performance!) by toropippi, under the Apache License 2.0 (`LICENSE-T3MP.txt`). The Performance Plus fixes were written from its description: none of its code is here.
