@@ -1,5 +1,7 @@
 # TimberPerf
 
+![TimberPerf](Media/cover.png)
+
 Faster Timberborn: big settlements tick faster, saves load sooner, and forests draw as fast as empty land.
 
 It's a mod of its own, and other mods can ship it inside their folder too: BeaverBuddies Co-Op/PvP Edition and Archipelago do. The game loads every DLL in every enabled mod's folder, so with more than one of them on there's more than one copy. Only the newest version runs (the first loaded, when they're the same); the others log that they stand down and do nothing. Bump `<Version>` in `TimberPerf/TimberPerf.csproj` and in `TimberPerf/manifest.json` with every change, or an older build could be the one that runs.
