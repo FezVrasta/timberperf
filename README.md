@@ -20,10 +20,11 @@ Measured on a MacBook Pro (M1 Max, 32 GB), windowed, each case played with Timbe
 | Load time | 45.8 s | 33.7 s | 26% faster |
 | Ticking at speed 3, per frame | 3.7 ms | 1.5 ms | 59% less |
 
-**A 512×512 map in the editor** (65,468 plants, 20 s at the editor's top speed):
+**A 512×512 map in the editor** (65,468 plants, 20 s at the editor's top speed). The editor only simulates water and soil, a few ticks a second: what changes is the hitch each tick put in its frame.
 
 | | Without | With | |
 |---|---|---|---|
+| Top speed | 104 fps | 108 fps | +4% |
 | Frames over 33 ms | 42 | 12 | 71% fewer hitches |
 | Water over plants, per tick | 14.3 ms | 6.6 ms | 54% less |
 
