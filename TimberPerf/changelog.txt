@@ -1,0 +1,5 @@
+v1.1.0-1.0.0
+1.1.0-1.0.0
+* Faster big settlements, quicker loading, and forests that draw as fast as empty land.
+* Comes inside BeaverBuddies Co-Op/PvP Edition and Archipelago too: with more than one on, the newest copy runs.
+
