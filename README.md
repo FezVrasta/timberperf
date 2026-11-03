@@ -8,9 +8,9 @@ It's a mod of its own, and other mods can ship it inside their folder too: Beave
 
 ## Numbers
 
-Measured on a MacBook Pro (M1 Max, 32 GB), windowed, each case played with TimberPerf and then with it off (`TimberPerf-off`), Timber Empires disabled.
+Measured on a MacBook Pro (M1 Max, 32 GB), each case played with TimberPerf and then with it off (`TimberPerf-off`), Timber Empires disabled.
 
-**A big late-game save** (castori-di-montagna-fabri, a minute at each speed):
+**A late-game colony**: Iron Teeth on a 256×150 map, with 213 beavers, 124 bots, about 650 buildings, 5,500 levees, platforms and other blocks, 3,300 paths, 4,500 trees and 1,900 crops. A minute at each speed, in a 1400×880 window:
 
 | | Without | With | |
 |---|---|---|---|
@@ -20,12 +20,13 @@ Measured on a MacBook Pro (M1 Max, 32 GB), windowed, each case played with Timbe
 | Load time | 45.8 s | 33.7 s | 26% faster |
 | Ticking at speed 3, per frame | 3.7 ms | 1.5 ms | 59% less |
 
-**A 512×512 map in the editor** (65,468 plants, 20 s at the editor's top speed). The editor only simulates water and soil, a few ticks a second: what changes is the hitch each tick put in its frame.
+**A 512×512 forest in the map editor**: 65,468 plants, full-screen at 3456×2168, 30 s paused and 30 s at the editor's top speed. The editor only simulates water and soil, a few ticks a second, and the display caps it at 120 fps: what changes is the hitch each tick put in its frame.
 
 | | Without | With | |
 |---|---|---|---|
-| Top speed | 104 fps | 108 fps | +4% |
-| Frames over 33 ms | 42 | 12 | 71% fewer hitches |
+| Paused | 120 fps | 116 fps | at the display's cap |
+| Top speed | 105 fps | 109 fps | +4% |
+| Frames over 33 ms at top speed | 50 | 0 | no hitches |
 | Water over plants, per tick | 14.3 ms | 6.6 ms | 54% less |
 
 ## What it speeds up
