@@ -6,6 +6,25 @@ Faster Timberborn: big settlements tick faster, saves load sooner, and forests d
 
 It's a mod of its own, and other mods can ship it inside their folder too: BeaverBuddies Co-Op/PvP Edition and Archipelago do. The game loads every DLL in every enabled mod's folder, so with more than one of them on there's more than one copy. Only the newest version runs (the first loaded, when they're the same); the others log that they stand down and do nothing. Bump `<Version>` in `TimberPerf/TimberPerf.csproj` and in `TimberPerf/manifest.json` with every change, or an older build could be the one that runs.
 
+## Numbers
+
+Measured on a MacBook Pro (M1 Max, 32 GB), windowed, each case played with TimberPerf and then with it off (`TimberPerf-off`), Timber Empires disabled.
+
+**A big late-game save** (castori-di-montagna-fabri, 1 minute at speed 3):
+
+| | Without | With | |
+|---|---|---|---|
+| Load time | 45.3 s | 35.4 s | 22% faster |
+| Frame time | 25.7 ms (39 fps) | 19.9 ms (50 fps) | 28% more fps |
+| Ticking, per frame | 4.1 ms | 1.9 ms | 54% less |
+
+**A 512×512 map in the editor** (65,468 plants, 20 s at the editor's top speed):
+
+| | Without | With | |
+|---|---|---|---|
+| Frames over 33 ms | 42 | 12 | 71% fewer hitches |
+| Water over plants, per tick | 14.3 ms | 6.6 ms | 54% less |
+
 ## What it speeds up
 
 Each one gives the same result as the game's own code, only sooner. The ID is how logs, issues and commits refer to it.
