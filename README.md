@@ -27,7 +27,7 @@ Measured on a MacBook Pro (M1 Max, 32 GB), each case played with TimberPerf and 
 | Paused | 11 fps | 107 fps | 10× |
 | Top speed | 11 fps | 84 fps | 8× |
 | 1% low, top speed | 10 fps | 34 fps | 3.4× |
-| Water over plants, per tick | 14.3 ms | 6.6 ms | 54% less |
+| Checking which plants are flooded, per tick | 14.3 ms | 6.6 ms | 54% less |
 
 ## What it speeds up
 
