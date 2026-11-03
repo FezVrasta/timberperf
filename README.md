@@ -102,6 +102,10 @@ Each one gives the same result as the game's own code, only sooner. The ID is ho
 - `terrain-surface`: each layer of the terrain's surface is worked out once.
 - `load-gc-budget`: garbage collection holds off during the load while there's memory to spare, with one full collection at its end.
 
+### Extras
+
+- `editor-fps`: the game's FPS counter shows in the map editor too, with dev mode on or the FPS setting checked.
+
 Every load optimization checks the game's code it relies on against the versions it was reviewed with, and turns itself off after a game update that changed it, or when another mod patches the same methods.
 
 ## Building

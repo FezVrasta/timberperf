@@ -13,4 +13,14 @@ namespace TimberPerf
             containerDefinition.Bind<Plants.TreePatches>().AsSingleton();
         }
     }
+
+    // The game only shows its FPS counter in games, though the counter behind it also runs in the map editor
+    [Context("MapEditor")]
+    public class MapEditorConfigurator : IConfigurator
+    {
+        public void Configure(IContainerDefinition containerDefinition)
+        {
+            if (Copies.Active) containerDefinition.Bind<Timberborn.DiagnosticsUI.FramesPerSecondPanel>().AsSingleton();
+        }
+    }
 }
