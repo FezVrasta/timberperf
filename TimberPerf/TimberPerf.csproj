@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="env.props" Condition="Exists('env.props')" />
+  <Import Project="env.props.windows-template" Condition="!Exists('env.props') AND '$(OS)' != 'Unix'" />
+  <Import Project="env.props.unix-template" Condition="!Exists('env.props') AND '$(OS)' == 'Unix'" />
+  <!-- A mod of its own, and BeaverBuddies and Archipelago build it and ship TimberPerf.dll in their folders too (with
+       InstallMod=false). With more than one on the game loads it more than once, and only the newest copy starts
+       (Copies.cs), so bump the version here and in manifest.json with every change -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>TimberPerf</AssemblyName>
+    <Version>1.0.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <TimberbornDataPath Condition="'$(TimberbornDataPath)' == ''">$(TimberbornPath)Timberborn_Data\</TimberbornDataPath>
+    <TimberbornManagedPath>$(TimberbornDataPath)Managed\</TimberbornManagedPath>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <TimberbornTargetVersion>1.1</TimberbornTargetVersion>
+    <InstallMod Condition="'$(InstallMod)' == ''">true</InstallMod>
+    <ModPath>$(DocumentsPath)Timberborn/Mods/TimberPerf/</ModPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.3" ExcludeAssets="runtime">
+      <PrivateAssets>all</PrivateAssets>
+      <PublicizeCompilerGenerated>false</PublicizeCompilerGenerated>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="$(HarmonyPath)0Harmony.dll" Private="false" />
+    <Reference Include="$(TimberbornManagedPath)Bindito.Core.dll" Publicize="true" Private="false" />
+    <Reference Include="$(TimberbornManagedPath)Bindito.Unity.dll" Private="false" />
+    <Reference Include="$(TimberbornManagedPath)UnityEngine.*.dll" Publicize="true" Private="false" />
+    <Reference Include="$(TimberbornManagedPath)Unity.*.dll" Publicize="true" Private="false" />
+    <Reference Include="$(TimberbornManagedPath)Timberborn.*.dll" Publicize="true" Private="false" />
+    <Reference Include="$(TimberbornManagedPath)System.Collections.Immutable.dll" Private="false" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="manifest.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!-- Built on its own it installs into the Mods folder, as the mod; a test run holding the Mods folder keeps it out -->
+  <PropertyGroup>
+    <BBTestLock>$([System.IO.Path]::GetTempPath())bb-run-lock</BBTestLock>
+  </PropertyGroup>
+  <Target Name="InstallMod" AfterTargets="Build" Condition="'$(InstallMod)' == 'true' AND (!Exists('$(BBTestLock)') OR '$(BB_HOLDS_LOCK)' == '1')">
+    <RemoveDir Directories="$(ModPath)" />
+    <Copy SourceFiles="$(ProjectDir)$(OutDir)TimberPerf.dll;$(ProjectDir)$(OutDir)manifest.json" DestinationFolder="$(ModPath)version-$(TimberbornTargetVersion)" />
+    <Copy SourceFiles="$(ProjectDir)thumbnail.png" DestinationFolder="$(ModPath)" Condition="Exists('$(ProjectDir)thumbnail.png')" />
+    <Copy SourceFiles="$(ProjectDir)workshop_data.json" DestinationFolder="$(ModPath)" Condition="Exists('$(ProjectDir)workshop_data.json')" />
+    <Message Importance="High" Text="TimberPerf installed -> $(ModPath)" />
+  </Target>
+</Project>

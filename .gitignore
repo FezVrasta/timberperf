@@ -1,0 +1,4 @@
+bin/
+obj/
+TimberPerf/env.props
+.DS_Store
