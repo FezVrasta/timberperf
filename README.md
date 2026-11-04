@@ -94,6 +94,7 @@ Each one gives the same result as the game's own code, only sooner. The ID is ho
 ### Drawing
 
 - `tree-patches`: plants are drawn as one mesh per material for every 32-tile patch, so a forest draws like an empty map. <img src="Media/badges/ours.svg" alt="TimberPerf" height="18">
+- `model-blockage`: the layer slicer switches only the models its cut hides or shows, not every model on the levels it passed. <img src="Media/badges/ours.svg" alt="TimberPerf" height="18">
 - `water-once-per-frame`: water textures go to the graphics card once a frame, not once a tick. <img src="Media/badges/P%2B.svg" alt="Performance Plus" height="18">
 - `water-upload`: water texture layers whose bytes didn't change aren't uploaded again. <img src="Media/badges/T3MP.svg" alt="T3MP" height="18">
 - `shaft-once-per-frame`: power shaft animations update once a frame, not once a tick. <img src="Media/badges/P%2B.svg" alt="Performance Plus" height="18">
