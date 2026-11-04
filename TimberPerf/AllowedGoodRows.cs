@@ -30,9 +30,13 @@ namespace TimberPerf
         [HarmonyPatch(typeof(InventoryFillCalculator), nameof(InventoryFillCalculator.GetInventoryFillPercentage))]
         static IEnumerable<CodeInstruction> Fill(IEnumerable<CodeInstruction> instructions) => Replace.With(typeof(AllowedGoodRows), nameof(GetInventoryFillPercentage));
 
+        // Added in 1.1.2.8; older builds (Game Pass lags behind) only have _ignorableCapacity.
+        static readonly AccessTools.FieldRef<Inventory, bool> SpecIgnorableCapacity =
+            AccessTools.DeclaredField(typeof(Inventory), "_specIgnorableCapacity") is { } field ? AccessTools.FieldRefAccess<Inventory, bool>(field) : null;
+
         static void GetCapacity(Inventory inventory, List<GoodAmount> capacity)
         {
-            if (inventory._ignorableCapacity || inventory._specIgnorableCapacity) return;
+            if (inventory._ignorableCapacity || (SpecIgnorableCapacity != null && SpecIgnorableCapacity(inventory))) return;
             foreach (StorableGoodAmount row in inventory.AllowedGoods)
             {
                 string good = row.StorableGood.GoodId;
