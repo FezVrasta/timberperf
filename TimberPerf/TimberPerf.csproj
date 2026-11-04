@@ -8,7 +8,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>TimberPerf</AssemblyName>
-    <Version>1.1.0-1.0.3</Version>
+    <Version>1.1.0-1.0.4</Version>
     <!-- The game version, a dash, the mod's own semver. Copies.cs picks the newest copy by assembly version, so that's the
          part after the dash: .NET would make every release 1.1.0.0 -->
     <AssemblyVersion>$([System.String]::Copy('$(Version)').Split('-')[1])</AssemblyVersion>

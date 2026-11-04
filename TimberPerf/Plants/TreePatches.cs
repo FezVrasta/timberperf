@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using HarmonyLib;
+using Timberborn.BlockObjectModelSystem;
+using Timberborn.BlockSystem;
 using Timberborn.EntitySystem;
+using Timberborn.LevelVisibilitySystem;
 using Timberborn.NaturalResources;
 using Timberborn.NaturalResourcesModelSystem;
 using Timberborn.SelectionSystem;
@@ -17,7 +20,9 @@ namespace TimberPerf.Plants
      * again the frame after one of its plants changed model, came or went. A highlighted plant is left out and draws
      * itself, so the game's highlight shows on it. Patches don't cross islands (Archipelago's, through
      * Hooks.IslandAt): each is drawn only by its own island's camera. A plant hidden in the fog of war (Timber Empires,
-     * through PlantFogged) is left out and left to the fog.
+     * through PlantFogged) is left out and left to the fog. A patch's meshes are split by the plants' level, so the
+     * layer slicer only switches the ones above its cut to shadows, as the game does with each plant, with nothing merged
+     * again.
      */
     public class TreePatches : IPostLoadableSingleton, ILateUpdatableSingleton, IUnloadableSingleton
     {
@@ -30,6 +35,8 @@ namespace TimberPerf.Plants
         {
             public EntityComponent Entity;
             public MeshRenderer[] Renderers;
+            public BlockObjectModelController Model;
+            public int Level;
             public (int, Vector2Int) Patch;
             public bool Released;
             public bool Fogged;
@@ -40,6 +47,8 @@ namespace TimberPerf.Plants
             public GameObject Root;
             public MeshFilter Filter;
             public MeshRenderer Renderer;
+            public ShadowCastingMode Mode;
+            public int Level;
             public readonly List<CombineInstance> Pieces = new();
         }
 
@@ -47,16 +56,18 @@ namespace TimberPerf.Plants
         {
             public int Island;
             public readonly List<Plant> Plants = new();
-            public readonly Dictionary<(Material, ShadowCastingMode, int), Part> Parts = new();
+            public readonly Dictionary<(Material, ShadowCastingMode, int, int), Part> Parts = new();
         }
 
         private readonly EntityRegistry _entityRegistry;
         private readonly EventBus _eventBus;
+        private readonly ILevelVisibilityService _levels;
         private readonly Dictionary<EntityComponent, Plant> _plants = new();
         private readonly Dictionary<(int, Vector2Int), Patch> _patches = new();
         private readonly HashSet<(int, Vector2Int)> _dirty = new();
         // A merged material for each of the game's: the game gives every plant a copy of its own
-        private readonly Dictionary<(string, Shader), Material> _materials = new();
+        private readonly Dictionary<(string, Shader, bool), Material> _materials = new();
+        private static readonly int EnableDetail = Shader.PropertyToID("_EnableDetail");
         // The plants' renderers switched off here, so other mods can tell them from hidden ones
         private readonly HashSet<Renderer> _merged = new();
         private readonly List<MeshRenderer> _shown = new();
@@ -66,10 +77,11 @@ namespace TimberPerf.Plants
         private bool _off;
         private bool _logged;
 
-        public TreePatches(EntityRegistry entityRegistry, EventBus eventBus)
+        public TreePatches(EntityRegistry entityRegistry, EventBus eventBus, ILevelVisibilityService levels)
         {
             _entityRegistry = entityRegistry;
             _eventBus = eventBus;
+            _levels = levels;
         }
 
         // For the mods that ship TimberPerf, by reflection (TimberPerfBridge): a plant in the fog of war or out of it,
@@ -87,6 +99,16 @@ namespace TimberPerf.Plants
             foreach (EntityComponent entity in _entityRegistry.Entities) Add(entity);
             _eventBus.Register(this);
         }
+
+        [OnEvent]
+        public void OnMaxVisibleLevelChanged(MaxVisibleLevelChangedEvent changed)
+        {
+            foreach (Patch patch in _patches.Values) foreach (Part part in patch.Parts.Values) Slice(part);
+        }
+
+        // Shadows only above the slicer's cut
+        private void Slice(Part part) =>
+            part.Renderer.shadowCastingMode = part.Mode == ShadowCastingMode.On && part.Level > _levels.MaxVisibleLevel ? ShadowCastingMode.ShadowsOnly : part.Mode;
 
         public void Unload()
         {
@@ -119,6 +141,8 @@ namespace TimberPerf.Plants
             {
                 Entity = entity,
                 Renderers = entity.GameObject.GetComponentsInChildren<MeshRenderer>(true),
+                Model = entity.GetComponent<BlockObjectModelController>(),
+                Level = entity.TryGetComponent(out BlockObject block) ? block.CoordinatesAtBaseZ.z : 0,
                 Patch = (island, new Vector2Int(Mathf.FloorToInt(at.x / PatchSize), Mathf.FloorToInt(at.z / PatchSize))),
                 Fogged = _fogged.Contains(entity),
             };
@@ -236,8 +260,11 @@ namespace TimberPerf.Plants
                     {
                         if (!materials[i]) continue;
                         Material shared = Shared(materials[i]);
-                        var key = (shared, renderer.shadowCastingMode, renderer.gameObject.layer);
-                        if (!patch.Parts.TryGetValue(key, out Part part)) patch.Parts[key] = part = NewPart(shared, renderer, patch.Island);
+                        // Merged as the plant shows uncut, the slicer's shadows put back by Slice
+                        ShadowCastingMode mode = renderer.shadowCastingMode;
+                        if (mode == ShadowCastingMode.ShadowsOnly && plant.Model && plant.Model.ModelBlocked) mode = ShadowCastingMode.On;
+                        var key = (shared, mode, renderer.gameObject.layer, plant.Level);
+                        if (!patch.Parts.TryGetValue(key, out Part part)) patch.Parts[key] = part = NewPart(shared, renderer, mode, plant.Level, patch.Island);
                         part.Pieces.Add(new CombineInstance { mesh = mesh, subMeshIndex = i, transform = renderer.localToWorldMatrix });
                     }
                 }
@@ -248,28 +275,30 @@ namespace TimberPerf.Plants
                 merged.Clear();
                 part.Root.SetActive(part.Pieces.Count > 0);
                 if (part.Pieces.Count > 0) merged.CombineMeshes(part.Pieces.ToArray(), true, true);
+                Slice(part);
             }
         }
 
         private Material Shared(Material material)
         {
-            var key = (material.name.Replace(" (Instance)", ""), material.shader);
+            // Fruit on a bush is a switch in the plant's own copy (GatherableModel), so with and without are two
+            bool detail = material.HasFloat(EnableDetail) && material.GetFloat(EnableDetail) > 0.5f;
+            var key = (material.name.Replace(" (Instance)", ""), material.shader, detail);
             if (!_materials.TryGetValue(key, out Material shared))
             {
-                shared = new Material(material) { name = key.Item1 + " (patches)" };
+                shared = new Material(material) { name = key.Item1 + (detail ? " detail" : "") + " (patches)" };
                 _materials[key] = shared;
             }
             return shared;
         }
 
-        private Part NewPart(Material material, MeshRenderer like, int island)
+        private Part NewPart(Material material, MeshRenderer like, ShadowCastingMode mode, int level, int island)
         {
             var root = new GameObject($"{material.name} patch") { layer = like.gameObject.layer };
             root.transform.SetParent(_parent, false);
-            var part = new Part { Root = root, Filter = root.AddComponent<MeshFilter>(), Renderer = root.AddComponent<MeshRenderer>() };
+            var part = new Part { Root = root, Filter = root.AddComponent<MeshFilter>(), Renderer = root.AddComponent<MeshRenderer>(), Mode = mode, Level = level };
             part.Filter.sharedMesh = new Mesh { name = root.name, indexFormat = IndexFormat.UInt32 };
             part.Renderer.sharedMaterial = material;
-            part.Renderer.shadowCastingMode = like.shadowCastingMode;
             part.Renderer.receiveShadows = like.receiveShadows;
             part.Renderer.renderingLayerMask = like.renderingLayerMask & ~(uint)(1 << RenderingLayerMask.NameToRenderingLayer("Selection"));
             part.Renderer.lightProbeUsage = like.lightProbeUsage;
