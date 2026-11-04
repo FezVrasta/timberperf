@@ -1,3 +1,9 @@
+v1.1.0-1.0.5
+1.1.0-1.0.5
+* Plants hide above the layer tool's cut and come back as soon as it's turned off.
+* Berries show on bushes without clicking them first.
+* Changing the layer tool's level lags much less on big islands.
+
 v1.1.0-1.0.3
 1.1.0-1.0.3
 * Buildings and plants standing in Archipelago's sea count as being in the water.
