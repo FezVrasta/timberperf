@@ -1,3 +1,7 @@
+v1.1.0-1.0.3
+1.1.0-1.0.3
+* Buildings and plants standing in Archipelago's sea count as being in the water.
+
 v1.1.0-1.0.1
 1.1.0-1.0.1
 * The FPS counter shows in the map editor too.
