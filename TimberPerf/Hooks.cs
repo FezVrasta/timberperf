@@ -27,6 +27,9 @@ namespace TimberPerf
         public static Action<int, Renderer> IslandRenderer;
         public static Action IslandRenderersCleared;
 
+        /** The water over an object's base as a mod counts it (Archipelago's sea, outside the water map), from what the map gives. */
+        public static Func<Timberborn.WaterObjects.WaterObject, Vector3Int, int, int> WaterAboveBase;
+
         /** A mod that patches how some buildings join the navigation mesh says which, so the shapes the game builds are reused for the others only. */
         public static void AddNavigationShapeBypass(string harmonyId, Func<BlockObject, bool> buildings) =>
             NavigationShapePlans.AddBypass(harmonyId, buildings);

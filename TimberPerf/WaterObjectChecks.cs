@@ -9,6 +9,7 @@ namespace TimberPerf
      * How deep the water is over every plant and building, checked each tick, read straight out of the water map's arrays.
      * The game asks the map through its interface once per object (bounds, cell index, column search), which on a big
      * wooded map is most of a tick. Same columns, same rounding, same events: only the lookups are cheaper.
+ * A mod's own water (Hooks.WaterAboveBase) is added the same as on the game's way.
      */
     [HarmonyPatch(typeof(WaterObjectService), nameof(WaterObjectService.Tick))]
     [HarmonyPriority(HarmonyLib.Priority.Last)]
@@ -24,6 +25,7 @@ namespace TimberPerf
             byte[] counts = map._threadSafeColumnCounts;
             ReadOnlyWaterColumn[] columns = map._threadSafeWaterColumns;
             int stride = map._verticalStride;
+            var adjust = Hooks.WaterAboveBase;
             var indices = map._mapIndexService;
             Vector3Int size = indices.TerrainSize;
             for (int i = 0; i < objects.Count; i++)
@@ -47,6 +49,7 @@ namespace TimberPerf
                     }
                 }
                 int above = Mathf.Max(0, height - at.z);
+                if (adjust != null) above = adjust(water, at, above);
                 if (above != water.WaterAboveBase) water.UpdateWaterAboveBase(above);
             }
             return false;
