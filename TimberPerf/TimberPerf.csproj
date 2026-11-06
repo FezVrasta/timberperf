@@ -46,7 +46,7 @@
   <PropertyGroup>
     <BBTestLock>$([System.IO.Path]::GetTempPath())bb-run-lock</BBTestLock>
   </PropertyGroup>
-  <Target Name="InstallMod" AfterTargets="Build" Condition="'$(InstallMod)' == 'true' AND (!Exists('$(BBTestLock)') OR '$(BB_HOLDS_LOCK)' == '1')">
+  <Target Name="InstallMod" AfterTargets="Build" Condition="'$(InstallMod)' == 'true' AND (!Exists('$(BBTestLock)/home-mods') OR '$(BB_HOLDS_LOCK)' == '1')">
     <RemoveDir Directories="$(ModPath)" />
     <Copy SourceFiles="$(ProjectDir)$(OutDir)TimberPerf.dll;$(ProjectDir)$(OutDir)manifest.json" DestinationFolder="$(ModPath)version-$(TimberbornTargetVersion)" />
     <!-- The manifest only carries major.minor (a different manifest version makes the game warn on every save): the real version is here and in the DLL -->
